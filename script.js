@@ -2,7 +2,7 @@ const onBtn = document.getElementById("onBtn");
 const homeBtn = document.getElementById("homeBtn");
 const enterBtn = document.getElementById("enterBtn");
 const clearBtn = document.getElementById("clearBtn");
-const textOutput = document.getElementById("textScreen");
+const textOutput = document.getElementById("textOutput");
 const screenOutput = document.getElementById("screenOutput");
 const keyQ = document.getElementById("keyQ");
 const keyW = document.getElementById("keyW");
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-
+// enter for randpokemon
 async function displayRanPokemon() {
   let pokedexData = [];
   try {
@@ -120,21 +120,25 @@ async function displayRanPokemon() {
 
 enterBtn.addEventListener("click", displayRanPokemon);
 
+// ran Pokemon clear
 function clearScreens () {
   const img = document.getElementById("img");
   img.remove();
 
   textOutput.textContent = "";
 }
-
 clearBtn.addEventListener("click", clearScreens)
 
 
-keyA.addEventListener("click",
-  () => {
-    let outputChar = keyA.value
-    console.log(outputChar);
-  }
-)
+// keyboard
+
+let searchDisplay = "";
+
+keyA.addEventListener("click", () => {
+  let outputChar = keyA.value
+    searchDisplay += outputChar;
+    console.log(searchDisplay)
+    textOutput.textContent = searchDisplay;
+})
 
 
