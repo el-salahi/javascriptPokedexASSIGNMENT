@@ -1,0 +1,325 @@
+:root {
+    --pokedex: #D6092E;
+    --blueLight: #1E6796;
+    --blueHighlight: #6CC0DF;
+    --screenContainer: #CED0CA;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    width: 100vw;
+}
+
+#pokedexContainer {
+    width: 800px;
+    height: 600px;
+    border: solid;
+    display: flex;
+    flex-direction: row;
+}
+
+.box {
+    background-color: var(--pokedex);
+    width: 400px;
+    height: 100%;
+}
+
+.topPanel {
+    width: 100%;
+    height: 90px;
+    border-bottom: solid;
+}
+
+
+/* LEFT */
+#boxLeft {
+    border-right: 10px solid black;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 10px;
+}
+
+/* * top panel */
+#topPanelContainer {
+    display: flex;
+    flex-flow: row nowrap;
+}
+/* TODO Sort curve out */
+#topPanel {
+    width: 250px;
+    height: 90px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#onLight {
+    width: 70px;
+    height: 70px;
+    background-color: var(--blueLight);
+    border-radius: 50%;
+    border: 2px solid whitesmoke;
+    margin-top: 10px;
+}
+
+.lights {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin-top: 5px
+}
+.lights.red {
+    background-color: red;
+}
+.lights.yellow {
+    background-color: yellow;
+}
+.lights.green {
+    background-color: green;
+}
+
+
+#curve {
+    width: 0;
+    height: 0;
+    border-left: 50px;
+    border-bottom: 60px solid transparent;
+}
+
+#topPanelCont {
+    width: 100px;
+    height: 30px;
+}
+
+/* * img screen */
+
+#imgScreenContainer {
+    width: 95%;
+    height: 300px;
+    background-color: var(--screenContainer);
+    border: 2px solid black;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 6px;
+    border-bottom-left-radius: 35px;
+}
+#screenLightContainer {
+    width: 100%;
+    height: 12%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.scrnLight {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--pokedex);
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#screenOutput {
+    width: 85%;
+    height: 75%;
+    background-color: black;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#img {
+    width: 75%;
+    height: 75%;
+    object-fit: cover;
+}
+#screenDecorContainer {
+    width: 100%;
+    height: 13%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+#scrnDecbtn {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: var(--pokedex);
+    margin-left: 15px;
+}
+#scrnDecLines {
+    width: 35px;
+    height: 100%;
+    margin-right: 25px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--pokedex);
+}
+
+/* * button panel */
+
+#buttonPanel {
+    width: 95%;
+    height: 175px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+#goContainer {
+    height: 100%;
+    width: 20%;
+}
+#onBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:#133247;
+}
+#homeContainer {
+    height: 80%;
+    width: 50%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.slimBtn {
+    width: 55px;
+    height: 10px;
+    border-radius: 5px;
+    border-radius: 3px solid black;
+}
+.right {
+    background-color: #133247;
+}
+.left {
+    background-color: #8e021c;
+}
+#homeBtn {
+    width: 80%;
+    height: 60px;
+    background-color: rgb(6, 94, 6);
+    border-radius: 1px solid black;
+}
+#dPadContainer {
+    height: 70%;
+    width: 30%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+.dPadSqu {
+    width: 100%;
+    height: 100%;
+    background-color: #0a1923;
+}
+.dPadSqu.One {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2; 
+}
+.dPadSqu.Two {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3; 
+}
+.dPadSqu.Three {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3; 
+}
+.dPadSqu.Four {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3; 
+}
+.dPadSqu.Five {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4; 
+}
+
+/* RIGHT PANEL */
+
+#boxRight {
+    border-left: 10px solid black;
+}
+
+#flexContentContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#textScreen {
+    width: 90%;
+    height: 140px;
+    background-color: black;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: whitesmoke;
+}
+
+
+#keyboardContainer {
+    width: 90%;
+    height: 150px;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(3, 2fr);
+    margin-bottom: 10px;
+}
+
+.keySqu{
+    grid-column: span 2;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blueLight);
+    border: 2px solid black
+}
+
+.indentWholeKey {
+    grid-column: span 2;
+}
+
+
+#decorationStuff {
+    width: 100%;
+    height: 140px;
+    border: solid;
+    margin-bottom: 10px;
+    display: none;
+}
+
+#navBtnContainer {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navBtn {
+    width: 120px;
+    height: 40px;
+    border: solid;
+    background-color: #133247;
+}
