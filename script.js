@@ -30,6 +30,7 @@ const keyV = document.getElementById("keyV");
 const keyB = document.getElementById("keyB");
 const keyN = document.getElementById("keyN");
 const keyM = document.getElementById("keyM");
+const backSpace = document.getElementById("backSpace")
 const pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
 let pokedexData = [];
 
@@ -140,5 +141,16 @@ keyA.addEventListener("click", () => {
     console.log(searchDisplay)
     textOutput.textContent = searchDisplay;
 })
+
+function deleteCharacter() {
+  if (textOutput.textContent !== "") {
+    let string = textOutput.textContent
+  let stringArray = string.split("");
+  stringArray.pop();
+  let searchDisplay = stringArray.join("")
+  textOutput.textContent = searchDisplay;
+  }
+}
+backSpace.addEventListener("click", deleteCharacter);
 
 
