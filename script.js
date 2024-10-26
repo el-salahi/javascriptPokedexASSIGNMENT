@@ -8,6 +8,7 @@ const onLight = document.getElementById("onLight")
 const redLight = document.getElementById("redLight")
 const yellowLight = document.getElementById("yellowLight")
 const greenLight = document.getElementById("greenLight")
+const defaultImg = document.getElementById("defaultImg")
 const keyQ = document.getElementById("keyQ");
 const keyW = document.getElementById("keyW");
 const keyE = document.getElementById("keyE");
@@ -92,6 +93,8 @@ function animation() {
     redLight.classList.toggle("red");
     yellowLight.classList.toggle("yellow");
     greenLight.classList.toggle("green");
+    defaultImg.classList.toggle("defaultImg");
+    textOutput.classList.toggle("defaultText");
   }
 
 onBtn.addEventListener("click", animation);

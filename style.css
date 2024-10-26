@@ -140,6 +140,9 @@ body {
     justify-content: center;
     align-items: center;
 }
+#defaultImg {
+    opacity: 0;
+}
 #img {
     width: 75%;
     height: 75%;
@@ -278,7 +281,7 @@ body {
     background-color: black;
     margin-bottom: 10px;
     margin-top: 10px;
-    color: whitesmoke;
+    color: black;
 }
 
 
@@ -402,4 +405,31 @@ body {
     animation-fill-mode: none, forwards;
 }
 
+/* SCREENS ON ANIMATION */
+
+@keyframes defaultImgDisplay {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.defaultImg {
+    animation-name: defaultImgDisplay;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    animation-delay: 2.8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes defaultTextDisplay {
+    from {color: black;}
+    to {color: whitesmoke;}
+}
+.defaultText {
+    animation-name: defaultTextDisplay;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    animation-delay: 2.8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
 
