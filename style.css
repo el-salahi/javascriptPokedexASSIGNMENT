@@ -87,8 +87,6 @@ body {
     background-color: rgb(12, 99, 12);
 }
 
-
-
 #curve {
     width: 0;
     height: 0;
@@ -275,15 +273,30 @@ body {
     align-items: center;
 }
 
-#textOutput {
+#textOutputContainer {
     width: 90%;
     height: 140px;
     background-color: black;
     margin-bottom: 10px;
     margin-top: 10px;
-    color: black;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+#textOutput {
+    color: whitesmoke;
+    width: 100%;
+    display: none;
 }
 
+span {
+    width: 50%;
+}
+.selected {
+    border: 2px dotted whitesmoke;
+    background-color: rgba(36, 108, 156, 0.4);
+    font-weight: bold;
+}
 
 #keyboardContainer {
     width: 90%;
@@ -405,31 +418,5 @@ body {
     animation-fill-mode: none, forwards;
 }
 
-/* SCREENS ON ANIMATION */
 
-@keyframes defaultImgDisplay {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-.defaultImg {
-    animation-name: defaultImgDisplay;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in;
-    animation-delay: 2.8s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-}
-
-@keyframes defaultTextDisplay {
-    from {color: black;}
-    to {color: whitesmoke;}
-}
-.defaultText {
-    animation-name: defaultTextDisplay;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in;
-    animation-delay: 2.8s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-}
 
