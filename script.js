@@ -133,24 +133,45 @@ clearBtn.addEventListener("click", clearScreens)
 
 // keyboard
 
-let searchDisplay = "";
+const keys = document.querySelectorAll(".keySqu");
 
-keyA.addEventListener("click", () => {
-  let outputChar = keyA.value
-    searchDisplay += outputChar;
-    console.log(searchDisplay)
+
+// keyA.addEventListener("click", () => {
+//   let outputChar = keyA.value
+//     searchDisplay += outputChar;
+//     console.log(searchDisplay)
+//     textOutput.textContent = searchDisplay;
+// })
+
+const keyboardContainer = document.getElementById("keyboardContainer");
+let searchDisplay = textOutput.textContent;
+
+function displayKey(event) {
+  const key = event.target;
+  const outputChar = key.value;
+  if (outputChar === "") {
+    let stringArray = searchDisplay.split("");
+    stringArray.pop();
+    searchDisplay = stringArray.join("");
     textOutput.textContent = searchDisplay;
-})
-
-function deleteCharacter() {
-  if (textOutput.textContent !== "") {
-    let string = textOutput.textContent
-  let stringArray = string.split("");
-  stringArray.pop();
-  let searchDisplay = stringArray.join("")
+  } else {
+    searchDisplay += outputChar;
   textOutput.textContent = searchDisplay;
   }
 }
-backSpace.addEventListener("click", deleteCharacter);
+keyboardContainer.addEventListener("click",displayKey);
+
+
+
+// function deleteCharacter() {
+//   if (textOutput.textContent !== "") {
+//     let string = textOutput.textContent
+//   let stringArray = string.split("");
+//   stringArray.pop();
+//   let searchDisplay = stringArray.join("")
+//   textOutput.textContent = searchDisplay;
+//   }
+// }
+// backSpace.addEventListener("click", deleteCharacter);
 
 
