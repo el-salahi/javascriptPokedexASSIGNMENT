@@ -4,6 +4,10 @@ const enterBtn = document.getElementById("enterBtn");
 const clearBtn = document.getElementById("clearBtn");
 const textOutput = document.getElementById("textOutput");
 const screenOutput = document.getElementById("screenOutput");
+const onLight = document.getElementById("onLight")
+const redLight = document.getElementById("redLight")
+const yellowLight = document.getElementById("yellowLight")
+const greenLight = document.getElementById("greenLight")
 const keyQ = document.getElementById("keyQ");
 const keyW = document.getElementById("keyW");
 const keyE = document.getElementById("keyE");
@@ -80,10 +84,17 @@ async function errorCheck() {
     console.log(error);
   }
 }
-
 document.addEventListener("DOMContentLoaded", errorCheck)
 
+// * animation on onBtn click
+function animation() {
+    onLight.classList.toggle("main");
+    redLight.classList.toggle("red");
+    yellowLight.classList.toggle("yellow");
+    greenLight.classList.toggle("green");
+  }
 
+onBtn.addEventListener("click", animation);
 
 // * display randpokemon data on enter btn click
 async function displayRanPokemon() {
