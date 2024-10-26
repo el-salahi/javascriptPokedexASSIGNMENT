@@ -32,14 +32,13 @@ const keyN = document.getElementById("keyN");
 const keyM = document.getElementById("keyM");
 const backSpace = document.getElementById("backSpace")
 const pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
-let pokedexData = [];
 
+// * API FUNCTIONS
 
 async function getPokedexData() {
     let pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
     let limit151 = "?limit=151";
     pokedexAPI += limit151;
-    console.log(pokedexAPI); 
     const response = await fetch(pokedexAPI);
     const apiData = await response.json();
     return apiData;
@@ -49,20 +48,30 @@ async function getRanPokemon() {
     const ranNum = Math.floor(Math.random() * 151)
     let pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
     pokedexAPI += ranNum;
-    // console.log(pokedexAPI)
     const response = await fetch(pokedexAPI);
     const ranPokemon = await response.json();
     return ranPokemon;
 } 
 
-document.addEventListener("DOMContentLoaded", async () => {
+// TODO create getkeyInputPokemon function
+// async function getKeyInputPokemon() {
+//   let pokemonNumber; 
+//   let pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
+//   pokedexAPI += pokemonNumber;
+//   const response = await fetch(pokedexAPI);
+//   const inputtedPokemon = await response.json();
+//   return inputtedPokemon;
+// } 
+
+// * GET API DATA ON PAGE LOAD
+
+async function errorCheck() {
     let pokedexData = [];
   try {
     pokedexData = await getPokedexData();
   } catch (error) {
     console.log(error);
   }
-  // console.log(pokedexData);
 
   let ranPokemonData = [];
   try {
@@ -70,29 +79,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.log(error);
   }
-  // console.log(ranPokemonData);
-});
+}
+
+document.addEventListener("DOMContentLoaded", errorCheck)
 
 
 
-// enter for randpokemon
+// * display randpokemon data on enter btn click
 async function displayRanPokemon() {
-  let pokedexData = [];
-  try {
-    pokedexData = await getPokedexData();
-  } catch (error) {
-    console.log(error);
-  }
-  // console.log(pokedexData);
-
-  let ranPokemonData = [];
-  try {
-    ranPokemonData = await getRanPokemon();
-  } catch (error) {
-    console.log(error);
-  }
-  console.log(ranPokemonData);
-
+  let ranPokemonData = []
+  ranPokemonData = await getRanPokemon();
+// TODO IF check textoutput === "" && screenoutput has no child element?
   //  type list
   let typeArray = [];
   for (let i = 0; i < ranPokemonData.types.length; i++) {
@@ -118,10 +115,9 @@ async function displayRanPokemon() {
   screenOutput.append(ranPokemonImg);
   console.log(screenOutput)
 }
-
 enterBtn.addEventListener("click", displayRanPokemon);
 
-// ran Pokemon clear
+// * clear randpokemon data on clear btn click
 function clearScreens () {
   const img = document.getElementById("img");
   img.remove();
@@ -131,18 +127,7 @@ function clearScreens () {
 clearBtn.addEventListener("click", clearScreens)
 
 
-// keyboard
-
-const keys = document.querySelectorAll(".keySqu");
-
-
-// keyA.addEventListener("click", () => {
-//   let outputChar = keyA.value
-//     searchDisplay += outputChar;
-//     console.log(searchDisplay)
-//     textOutput.textContent = searchDisplay;
-// })
-
+// * keyboard
 const keyboardContainer = document.getElementById("keyboardContainer");
 let searchDisplay = textOutput.textContent;
 
@@ -160,18 +145,5 @@ function displayKey(event) {
   }
 }
 keyboardContainer.addEventListener("click",displayKey);
-
-
-
-// function deleteCharacter() {
-//   if (textOutput.textContent !== "") {
-//     let string = textOutput.textContent
-//   let stringArray = string.split("");
-//   stringArray.pop();
-//   let searchDisplay = stringArray.join("")
-//   textOutput.textContent = searchDisplay;
-//   }
-// }
-// backSpace.addEventListener("click", deleteCharacter);
 
 
