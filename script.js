@@ -91,6 +91,11 @@ async function errorCheck() {
 }
 document.addEventListener("DOMContentLoaded", errorCheck)
 
+function toggleOptions() {
+  optSearch.classList.toggle("selected");
+  optRandom.classList.toggle("selected");
+}
+
 function imgCheck() {
   const img = screenOutput.querySelector("img");
   console.log(`Does it contain img? ${screenOutput.contains(img)}`)
@@ -98,9 +103,17 @@ function imgCheck() {
 }
 
 function pCheck() {
-  const p = textOutputContainer.querySelector(".option");
-  console.log(`Does it contain p? ${textOutputContainer.contains(p)}`)
-  return textOutputContainer.contains(p) ? true : false;
+  console.log(textOutputContainer.childElementCount)
+  return textOutputContainer.childElementCount > 1 ? true : false;
+}
+
+function removeScreenContent() {
+  let img = screenOutput.querySelector("img")
+  img.remove();
+  textOutput.textContent = "";
+  for (i = 0; i < textOutputContainer.childElementCount - 1; i++) {
+    textOutputContainer.lastElementChild.remove();
+  }
 }
 
 function getDefaultImg() {
@@ -120,11 +133,54 @@ function getHomeScreen() {
         textOutputContainer.append(optSearch);
         const optRandom = document.createElement("p");
         optRandom.setAttribute("id", "optRandom");
-        optSearch.classList.add("option")
+        optRandom.classList.add("option")
         optRandom.textContent = "Find a random Pokemon";
         textOutputContainer.append(optRandom);
         console.log(optSearch)
         console.log(optRandom)
+}
+
+async function displayRanPokemon() {
+  let ranPokemonData = []
+  ranPokemonData = await getRanPokemon();
+
+  //  type list
+  let typeArray = [];
+  for (let i = 0; i < ranPokemonData.types.length; i++) {
+    typeArray.push(ranPokemonData.types[i].type.name);
+  }
+  const typeList = typeArray.toString(); 
+  console.log(typeList);
+
+  // ablities list
+  let abilitiesArray = [];
+  for (let i = 0; i < ranPokemonData.abilities.length; i++) {
+    abilitiesArray.push(ranPokemonData.abilities[i].ability.name);
+  }
+  const abilitiesList = abilitiesArray.toString(); 
+  console.log(abilitiesList);
+
+  // Display ran pokemon stats
+  textOutput.textContent = "A random Pokemon appears..."
+  optRandom.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
+
+  // Remove default img and insert ran pokemon img
+  if (imgCheck()) {
+    screenOutput.removeChild(screenOutput.firstChild);
+  }
+  let img = ranPokemonData.sprites.front_default
+  const ranPokemonImg = document.createElement("img");
+  ranPokemonImg.setAttribute("src", img);
+  ranPokemonImg.setAttribute("id", "img");
+  screenOutput.append(ranPokemonImg);
+  console.log(screenOutput)
+}
+
+function clearRanPokemon () {
+  const img = document.getElementById("img");
+  img.remove();
+  textOutput.textContent = "Ready for another pokemon?\nPress Enter to discover more random pokemon.\nOr press home to search the name of your favourite!"
+  optRandom.textContent = "";
 }
 
 // * animation and default display on/off onBtn click
@@ -154,121 +210,68 @@ function animation() {
     //   setTimeout(getHomeScreen, 2800);
     //   }
     // }
-
-    function removeScreenContent() {
-      screenOutput.removeChild(screenOutput.firstChild);
-      textOutput.textContent = "";
-      console.log(optRandom)
-      console.log(optSearch)
-      optSearch.remove();
-      optRandom.remove();
-    }
-
     if (imgCheck() || pCheck()) {
       removeScreenContent();
     } else {
       setTimeout(getHomeScreen, 2800);
     }
 }
-
-
 onBtn.addEventListener("click", animation);
 
 // *choose Random or Search mode
-function toggle() {
-  optSearch.classList.toggle("selected");
-  optRandom.classList.toggle("selected");
+rightBtn.addEventListener("click", toggleOptions);
+leftBtn.addEventListener("click", toggleOptions);
+enterBtn.addEventListener("click", () => {
+
+  if (optSearch.classList.length === 2) {
+    console.log("SearchTest")
+    // *Set up Search screen
+    textOutput.textContent = "Type the name of your pokemon in the keyboard and click enter to find some quick stats";
+    optSearch.classList.remove("selected");
+    optSearch.textContent = "";
+    optRandom.remove();
+
+    // *Setup Keyboard Input
+    const keyboardContainer = document.getElementById("keyboardContainer");
+    let searchDisplay = optSearch.textContent;
+    function displayKey(event) {
+    const key = event.target;
+    const outputChar = key.value;
+    if (outputChar === "") {
+    let stringArray = searchDisplay.split("");
+    stringArray.pop();
+    searchDisplay = stringArray.join("");
+    optSearch.textContent = searchDisplay;
+    } else {
+    searchDisplay += outputChar;
+    optSearch.textContent = searchDisplay;
+    }
 }
-rightBtn.addEventListener("click", toggle);
-leftBtn.addEventListener("click", toggle);
+keyboardContainer.addEventListener("click",displayKey);
 
-// enterBtn.addEventListener("click", () => {
-//   if (optSearch.classList.value === "selected") {
+  } else if (optRandom.classList.length === 2) {
+    console.log("Ransom Test");
+    // *Set up Random screen
+    textOutput.textContent = "What will you find on your travels?\n Press Enter to discover new Pokemon in your vicinity!";
+    optRandom.classList.remove("selected");
+    optRandom.textContent = "";
+    optSearch.remove();
 
-//     // *Set up Search screen
-//     textOutput.textContent = "Type the name of your pokemon in the keyboard and click enter to find some quick stats";
-//     optSearch.classList.remove("selected");
-//     optSearch.textContent = "";
-//     optRandom.remove();
+     // * display randpokemon data on enter btn click
+    enterBtn.addEventListener("click", displayRanPokemon);
 
-//     // *Setup Keyboard Input
-//     const keyboardContainer = document.getElementById("keyboardContainer");
-//     let searchDisplay = optSearch.textContent;
-//     function displayKey(event) {
-//     const key = event.target;
-//     const outputChar = key.value;
-//     if (outputChar === "") {
-//     let stringArray = searchDisplay.split("");
-//     stringArray.pop();
-//     searchDisplay = stringArray.join("");
-//     optSearch.textContent = searchDisplay;
-//     } else {
-//     searchDisplay += outputChar;
-//     optSearch.textContent = searchDisplay;
-//     }
-// }
-// keyboardContainer.addEventListener("click",displayKey);
-//   } else if (optRandom.classList.value === "selected") {
+    // * clear randpokemon data on clear btn click
+    clearBtn.addEventListener("click", clearRanPokemon)
+  }
 
-//     // *Set up Random screen
-//     textOutput.textContent = "Press Enter to discover a new Pokemon on your travels!";
-//     optRandom.classList.remove("selected");
-//     optRandom.textContent = "";
-//     optSearch.remove();
-//   }
+})
 
-//   // * display randpokemon data on enter btn click
-// async function displayRanPokemon() {
-//   let ranPokemonData = []
-//   ranPokemonData = await getRanPokemon();
-
-//   //  type list
-//   let typeArray = [];
-//   for (let i = 0; i < ranPokemonData.types.length; i++) {
-//     typeArray.push(ranPokemonData.types[i].type.name);
-//   }
-//   const typeList = typeArray.toString(); 
-//   console.log(typeList);
-
-//   // ablities list
-//   let abilitiesArray = [];
-//   for (let i = 0; i < ranPokemonData.abilities.length; i++) {
-//     abilitiesArray.push(ranPokemonData.abilities[i].ability.name);
-//   }
-//   const abilitiesList = abilitiesArray.toString(); 
-//   console.log(abilitiesList);
-
-//   // Display ran pokemon stats
-//   textOutput.textContent = "A random Pokemon appears..."
-//   optRandom.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
-
-//   // Remove default img and insert ran pokemon img
-//   const imgCheck = screenOutput.querySelector("img");
-//   imgCheck.remove()
-//   let img = ranPokemonData.sprites.front_default
-//   const ranPokemonImg = document.createElement("img");
-//   ranPokemonImg.setAttribute("src", img);
-//   ranPokemonImg.setAttribute("id", "img");
-//   screenOutput.append(ranPokemonImg);
-//   console.log(screenOutput)
-// }
-// enterBtn.addEventListener("click", displayRanPokemon);
-
-// // * clear randpokemon data on clear btn click
-// function clearScreens () {
-//   const img = document.getElementById("img");
-//   img.remove();
-//   textOutput.textContent = "Ready for another pokemon?\nPress Enter to discover more random pokemon.\nOr press home to search the name of your favourite!"
-//   optRandom.textContent = "";
-// }
-// clearBtn.addEventListener("click", clearScreens)
-// })
-
-// // *Display back to default screens.
+// *Display back to default screens.
 
 homeBtn.addEventListener("click", () => {
   if (imgCheck() || pCheck()) {
     removeScreenContent();
+    getHomeScreen();
   } else {
     getHomeScreen();
   }
