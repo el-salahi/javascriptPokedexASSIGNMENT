@@ -91,42 +91,87 @@ async function errorCheck() {
 }
 document.addEventListener("DOMContentLoaded", errorCheck)
 
+function imgCheck() {
+  const img = screenOutput.querySelector("img");
+  console.log(`Does it contain img? ${screenOutput.contains(img)}`)
+  return screenOutput.contains(img) ? true : false;
+}
+
+function pCheck() {
+  const p = textOutputContainer.querySelector(".option");
+  console.log(`Does it contain p? ${textOutputContainer.contains(p)}`)
+  return textOutputContainer.contains(p) ? true : false;
+}
+
+function getDefaultImg() {
+  const defaultImg = document.createElement("img");
+        defaultImg.setAttribute("src", "data:image/png;base64,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")
+        defaultImg.setAttribute("alt", "pixel pokeball")
+        screenOutput.append(defaultImg); 
+}
+function getHomeScreen() {
+        getDefaultImg();
+        textOutput.textContent = `Welcome Pokemon trainer! \n What would you like to do?`;
+        const optSearch = document.createElement("p");
+        optSearch.setAttribute("id", "optSearch");
+        optSearch.classList.add("selected")
+        optSearch.classList.add("option")
+        optSearch.textContent = "Search your favourite Pokemon via the Pokedex keyboard";
+        textOutputContainer.append(optSearch);
+        const optRandom = document.createElement("p");
+        optRandom.setAttribute("id", "optRandom");
+        optSearch.classList.add("option")
+        optRandom.textContent = "Find a random Pokemon";
+        textOutputContainer.append(optRandom);
+        console.log(optSearch)
+        console.log(optRandom)
+}
 
 // * animation and default display on/off onBtn click
-const optionOne = document.getElementById("optionOne")
-
 function animation() {
     onLight.classList.toggle("main");
     redLight.classList.toggle("red");
     yellowLight.classList.toggle("yellow");
     greenLight.classList.toggle("green");
 
-    const imgCheck = screenOutput.querySelector("img");
-    if (screenOutput.contains(imgCheck)) {
-      imgCheck.remove();
+    // if (imgCheck()) {
+    //   screenOutput.removeChild(screenOutput.firstChild);
+    //   if (pCheck()) {
+    //     textOutput.textContent = "";
+    //     console.log(optRandom)
+    //     console.log(optSearch)
+    //     optSearch.remove();
+    //     optRandom.remove();
+    //   }
+    // } else {
+    //   if (pCheck()) {
+    //     textOutput.textContent = "";
+    //     console.log(optRandom)
+    //     console.log(optSearch)
+    //     optSearch.remove();
+    //     optRandom.remove();
+    //   } else {
+    //   setTimeout(getHomeScreen, 2800);
+    //   }
+    // }
+
+    function removeScreenContent() {
+      screenOutput.removeChild(screenOutput.firstChild);
       textOutput.textContent = "";
+      console.log(optRandom)
+      console.log(optSearch)
       optSearch.remove();
       optRandom.remove();
+    }
+
+    if (imgCheck() || pCheck()) {
+      removeScreenContent();
     } else {
-      setTimeout(() => {
-        const defaultImg = document.createElement("img");
-        defaultImg.setAttribute("src", "data:image/png;base64,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")
-        defaultImg.setAttribute("alt", "pixel pokeball")
-        screenOutput.append(defaultImg);      
-        textOutput.textContent = `Welcome Pokemon trainer! \n What would you like to do?`;
-        const optSearch = document.createElement("p");
-        optSearch.setAttribute("id", "optSearch");
-        optSearch.classList.add("selected")
-        optSearch.textContent = "Search your favourite Pokemon via the Pokedex keyboard";
-        textOutputContainer.append(optSearch);
-        const optRandom = document.createElement("p");
-        optRandom.setAttribute("id", "optRandom");
-        optRandom.textContent = "Find a random Pokemon";
-        textOutputContainer.append(optRandom);
-        console.log(optSearch.classList) 
-      }, 2800);
-    } 
-  }
+      setTimeout(getHomeScreen, 2800);
+    }
+}
+
+
 onBtn.addEventListener("click", animation);
 
 // *choose Random or Search mode
@@ -136,87 +181,98 @@ function toggle() {
 }
 rightBtn.addEventListener("click", toggle);
 leftBtn.addEventListener("click", toggle);
-enterBtn.addEventListener("click", () => {
-  if (optSearch.classList.value === "selected") {
 
-    // *Set up Search screen
-    textOutput.textContent = "Type the name of your pokemon in the keyboard and click enter to find some quick stats";
-    optSearch.classList.remove("selected");
-    optSearch.textContent = "";
-    optRandom.remove();
+// enterBtn.addEventListener("click", () => {
+//   if (optSearch.classList.value === "selected") {
 
-    // *Setup Keyboard Input
-    const keyboardContainer = document.getElementById("keyboardContainer");
-    let searchDisplay = optSearch.textContent;
-    function displayKey(event) {
-    const key = event.target;
-    const outputChar = key.value;
-    if (outputChar === "") {
-    let stringArray = searchDisplay.split("");
-    stringArray.pop();
-    searchDisplay = stringArray.join("");
-    optSearch.textContent = searchDisplay;
-    } else {
-    searchDisplay += outputChar;
-    optSearch.textContent = searchDisplay;
-    }
-}
-keyboardContainer.addEventListener("click",displayKey);
-  } else if (optRandom.classList.value === "selected") {
+//     // *Set up Search screen
+//     textOutput.textContent = "Type the name of your pokemon in the keyboard and click enter to find some quick stats";
+//     optSearch.classList.remove("selected");
+//     optSearch.textContent = "";
+//     optRandom.remove();
 
-    // *Set up Random screen
-    textOutput.textContent = "Press Enter to discover a new Pokemon!";
-    optRandom.classList.remove("selected");
-    optRandom.textContent = "";
-    optSearch.remove();
+//     // *Setup Keyboard Input
+//     const keyboardContainer = document.getElementById("keyboardContainer");
+//     let searchDisplay = optSearch.textContent;
+//     function displayKey(event) {
+//     const key = event.target;
+//     const outputChar = key.value;
+//     if (outputChar === "") {
+//     let stringArray = searchDisplay.split("");
+//     stringArray.pop();
+//     searchDisplay = stringArray.join("");
+//     optSearch.textContent = searchDisplay;
+//     } else {
+//     searchDisplay += outputChar;
+//     optSearch.textContent = searchDisplay;
+//     }
+// }
+// keyboardContainer.addEventListener("click",displayKey);
+//   } else if (optRandom.classList.value === "selected") {
+
+//     // *Set up Random screen
+//     textOutput.textContent = "Press Enter to discover a new Pokemon on your travels!";
+//     optRandom.classList.remove("selected");
+//     optRandom.textContent = "";
+//     optSearch.remove();
+//   }
+
+//   // * display randpokemon data on enter btn click
+// async function displayRanPokemon() {
+//   let ranPokemonData = []
+//   ranPokemonData = await getRanPokemon();
+
+//   //  type list
+//   let typeArray = [];
+//   for (let i = 0; i < ranPokemonData.types.length; i++) {
+//     typeArray.push(ranPokemonData.types[i].type.name);
+//   }
+//   const typeList = typeArray.toString(); 
+//   console.log(typeList);
+
+//   // ablities list
+//   let abilitiesArray = [];
+//   for (let i = 0; i < ranPokemonData.abilities.length; i++) {
+//     abilitiesArray.push(ranPokemonData.abilities[i].ability.name);
+//   }
+//   const abilitiesList = abilitiesArray.toString(); 
+//   console.log(abilitiesList);
+
+//   // Display ran pokemon stats
+//   textOutput.textContent = "A random Pokemon appears..."
+//   optRandom.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
+
+//   // Remove default img and insert ran pokemon img
+//   const imgCheck = screenOutput.querySelector("img");
+//   imgCheck.remove()
+//   let img = ranPokemonData.sprites.front_default
+//   const ranPokemonImg = document.createElement("img");
+//   ranPokemonImg.setAttribute("src", img);
+//   ranPokemonImg.setAttribute("id", "img");
+//   screenOutput.append(ranPokemonImg);
+//   console.log(screenOutput)
+// }
+// enterBtn.addEventListener("click", displayRanPokemon);
+
+// // * clear randpokemon data on clear btn click
+// function clearScreens () {
+//   const img = document.getElementById("img");
+//   img.remove();
+//   textOutput.textContent = "Ready for another pokemon?\nPress Enter to discover more random pokemon.\nOr press home to search the name of your favourite!"
+//   optRandom.textContent = "";
+// }
+// clearBtn.addEventListener("click", clearScreens)
+// })
+
+// // *Display back to default screens.
+
+homeBtn.addEventListener("click", () => {
+  if (imgCheck() || pCheck()) {
+    removeScreenContent();
+  } else {
+    getHomeScreen();
   }
-
-  // * display randpokemon data on enter btn click
-async function displayRanPokemon() {
-  let ranPokemonData = []
-  ranPokemonData = await getRanPokemon();
-
-  //  type list
-  let typeArray = [];
-  for (let i = 0; i < ranPokemonData.types.length; i++) {
-    typeArray.push(ranPokemonData.types[i].type.name);
-  }
-  const typeList = typeArray.toString(); 
-  console.log(typeList);
-
-  // ablities list
-  let abilitiesArray = [];
-  for (let i = 0; i < ranPokemonData.abilities.length; i++) {
-    abilitiesArray.push(ranPokemonData.abilities[i].ability.name);
-  }
-  const abilitiesList = abilitiesArray.toString(); 
-  console.log(abilitiesList);
-
-  // Display ran pokemon stats
-  optRandom.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
-
-  // Remove default img and insert ran pokemon img
-  const imgCheck = screenOutput.querySelector("img");
-  imgCheck.remove()
-  let img = ranPokemonData.sprites.front_default
-  const ranPokemonImg = document.createElement("img");
-  ranPokemonImg.setAttribute("src", img);
-  ranPokemonImg.setAttribute("id", "img");
-  screenOutput.append(ranPokemonImg);
-  console.log(screenOutput)
-}
-enterBtn.addEventListener("click", displayRanPokemon);
-
-// * clear randpokemon data on clear btn click
-function clearScreens () {
-  const img = document.getElementById("img");
-  img.remove();
-  textOutput.textContent = "Ready for another pokemon?"
-  optRandom.textContent = "";
-}
-clearBtn.addEventListener("click", clearScreens)
 })
-
 
 
 
