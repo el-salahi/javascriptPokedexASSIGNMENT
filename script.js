@@ -12,7 +12,7 @@ const onLight = document.getElementById("onLight")
 const redLight = document.getElementById("redLight")
 const yellowLight = document.getElementById("yellowLight")
 const greenLight = document.getElementById("greenLight")
-const defaultImg = document.getElementById("defaultImg")
+const defaultImg = document.getElementById("defaultImg");
 // const keyQ = document.getElementById("keyQ");
 // const keyW = document.getElementById("keyW");
 // const keyE = document.getElementById("keyE");
@@ -162,51 +162,61 @@ enterBtn.addEventListener("click", () => {
     }
 }
 keyboardContainer.addEventListener("click",displayKey);
-  } 
+  } else if (optRandom.classList.value === "selected") {
+
+    // *Set up Random screen
+    textOutput.textContent = "Press Enter to discover a new Pokemon!";
+    optRandom.classList.remove("selected");
+    optRandom.textContent = "";
+    optSearch.remove();
+  }
+
+  // * display randpokemon data on enter btn click
+async function displayRanPokemon() {
+  let ranPokemonData = []
+  ranPokemonData = await getRanPokemon();
+
+  //  type list
+  let typeArray = [];
+  for (let i = 0; i < ranPokemonData.types.length; i++) {
+    typeArray.push(ranPokemonData.types[i].type.name);
+  }
+  const typeList = typeArray.toString(); 
+  console.log(typeList);
+
+  // ablities list
+  let abilitiesArray = [];
+  for (let i = 0; i < ranPokemonData.abilities.length; i++) {
+    abilitiesArray.push(ranPokemonData.abilities[i].ability.name);
+  }
+  const abilitiesList = abilitiesArray.toString(); 
+  console.log(abilitiesList);
+
+  // Display ran pokemon stats
+  optRandom.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
+
+  // Remove default img and insert ran pokemon img
+  const imgCheck = screenOutput.querySelector("img");
+  imgCheck.remove()
+  let img = ranPokemonData.sprites.front_default
+  const ranPokemonImg = document.createElement("img");
+  ranPokemonImg.setAttribute("src", img);
+  ranPokemonImg.setAttribute("id", "img");
+  screenOutput.append(ranPokemonImg);
+  console.log(screenOutput)
+}
+enterBtn.addEventListener("click", displayRanPokemon);
+
+// * clear randpokemon data on clear btn click
+function clearScreens () {
+  const img = document.getElementById("img");
+  img.remove();
+  textOutput.textContent = "Ready for another pokemon?"
+  optRandom.textContent = "";
+}
+clearBtn.addEventListener("click", clearScreens)
 })
 
-
-
-// * display randpokemon data on enter btn click
-// async function displayRanPokemon() {
-//   let ranPokemonData = []
-//   ranPokemonData = await getRanPokemon();
-// // TODO IF check textoutput === "" && screenoutput has no child element?
-//   //  type list
-//   let typeArray = [];
-//   for (let i = 0; i < ranPokemonData.types.length; i++) {
-//     typeArray.push(ranPokemonData.types[i].type.name);
-//   }
-//   const typeList = typeArray.toString(); 
-//   console.log(typeList);
-
-//   // ablities list
-//   let abilitiesArray = [];
-//   for (let i = 0; i < ranPokemonData.abilities.length; i++) {
-//     abilitiesArray.push(ranPokemonData.abilities[i].ability.name);
-//   }
-//   const abilitiesList = abilitiesArray.toString(); 
-//   console.log(abilitiesList);
-
-//   textOutput.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
-
-//   let img = ranPokemonData.sprites.front_default
-//   const ranPokemonImg = document.createElement("img");
-//   ranPokemonImg.setAttribute("src", img);
-//   ranPokemonImg.setAttribute("id", "img");
-//   screenOutput.append(ranPokemonImg);
-//   console.log(screenOutput)
-// }
-// enterBtn.addEventListener("click", displayRanPokemon);
-
-// // * clear randpokemon data on clear btn click
-// function clearScreens () {
-//   const img = document.getElementById("img");
-//   img.remove();
-
-//   textOutput.textContent = "";
-// }
-// clearBtn.addEventListener("click", clearScreens)
 
 
 
