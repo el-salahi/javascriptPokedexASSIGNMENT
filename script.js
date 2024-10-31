@@ -2,39 +2,41 @@ const onBtn = document.getElementById("onBtn");
 const homeBtn = document.getElementById("homeBtn");
 const enterBtn = document.getElementById("enterBtn");
 const clearBtn = document.getElementById("clearBtn");
+const textOutputContainer = document.getElementById("textOutputContainer");
 const textOutput = document.getElementById("textOutput");
+const imgScreenContainer = document.getElementById("imgScreenContainer")
 const screenOutput = document.getElementById("screenOutput");
 const onLight = document.getElementById("onLight")
 const redLight = document.getElementById("redLight")
 const yellowLight = document.getElementById("yellowLight")
 const greenLight = document.getElementById("greenLight")
 const defaultImg = document.getElementById("defaultImg")
-const keyQ = document.getElementById("keyQ");
-const keyW = document.getElementById("keyW");
-const keyE = document.getElementById("keyE");
-const keyR = document.getElementById("keyR");
-const keyT = document.getElementById("keyT");
-const keyY = document.getElementById("keyY");
-const keyU = document.getElementById("keyU");
-const keyI = document.getElementById("keyI");
-const keyO = document.getElementById("keyO");
-const keyP = document.getElementById("keyP");
-const keyA = document.getElementById("keyA");
-const keyS = document.getElementById("keyS");
-const keyD = document.getElementById("keyD");
-const keyF = document.getElementById("keyF");
-const keyG = document.getElementById("keyG");
-const keyH = document.getElementById("keyH");
-const keyJ = document.getElementById("keyJ");
-const keyK = document.getElementById("keyK");
-const keyL = document.getElementById("keyL");
-const keyZ = document.getElementById("keyZ");
-const keyX = document.getElementById("keyX");
-const keyC = document.getElementById("keyC");
-const keyV = document.getElementById("keyV");
-const keyB = document.getElementById("keyB");
-const keyN = document.getElementById("keyN");
-const keyM = document.getElementById("keyM");
+// const keyQ = document.getElementById("keyQ");
+// const keyW = document.getElementById("keyW");
+// const keyE = document.getElementById("keyE");
+// const keyR = document.getElementById("keyR");
+// const keyT = document.getElementById("keyT");
+// const keyY = document.getElementById("keyY");
+// const keyU = document.getElementById("keyU");
+// const keyI = document.getElementById("keyI");
+// const keyO = document.getElementById("keyO");
+// const keyP = document.getElementById("keyP");
+// const keyA = document.getElementById("keyA");
+// const keyS = document.getElementById("keyS");
+// const keyD = document.getElementById("keyD");
+// const keyF = document.getElementById("keyF");
+// const keyG = document.getElementById("keyG");
+// const keyH = document.getElementById("keyH");
+// const keyJ = document.getElementById("keyJ");
+// const keyK = document.getElementById("keyK");
+// const keyL = document.getElementById("keyL");
+// const keyZ = document.getElementById("keyZ");
+// const keyX = document.getElementById("keyX");
+// const keyC = document.getElementById("keyC");
+// const keyV = document.getElementById("keyV");
+// const keyB = document.getElementById("keyB");
+// const keyN = document.getElementById("keyN");
+// const keyM = document.getElementById("keyM");
 const backSpace = document.getElementById("backSpace")
 const pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
 
@@ -87,7 +89,8 @@ async function errorCheck() {
 }
 document.addEventListener("DOMContentLoaded", errorCheck)
 
-// * animation on onBtn click
+
+// * animation and default display on/off onBtn click
 const optionOne = document.getElementById("optionOne")
 
 function animation() {
@@ -96,15 +99,31 @@ function animation() {
     yellowLight.classList.toggle("yellow");
     greenLight.classList.toggle("green");
 
-    setTimeout(() => {
-      const defaultImg = document.createElement("img");
-      defaultImg.setAttribute("src", "data:image/png;base64,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")
-      defaultImg.setAttribute("alt", "pixel pokeball")
-      screenOutput.append(defaultImg);
-      textOutput.style.display = "flex";
-    }, 2800);
+    const imgCheck = screenOutput.querySelector("img");
+    if (screenOutput.contains(imgCheck)) {
+      imgCheck.remove();
+      textOutput.textContent = "";
+      option1.remove();
+      option2.remove();
+    } else {
+      setTimeout(() => {
+        const defaultImg = document.createElement("img");
+        defaultImg.setAttribute("src", "data:image/png;base64,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")
+        defaultImg.setAttribute("alt", "pixel pokeball")
+        screenOutput.append(defaultImg);      
+        textOutput.textContent = 'Welcome Pokemon trainer! \n What would you like to do?';
+        const option1 = document.createElement("p");
+        option1.setAttribute("id", "option1");
+        option1.classList.add("selected")
+        option1.textContent = "Search your favourite Pokemon via the Pokedex keyboard";
+        textOutputContainer.append(option1);
+        const option2 = document.createElement("p");
+        option2.setAttribute("id", "option2");
+        option2.textContent = "Find a random Pokemon";
+        textOutputContainer.append(option2);
+      }, 2800);
+    }  
   }
-
 onBtn.addEventListener("click", animation);
 
 // *choose Random or Search mode

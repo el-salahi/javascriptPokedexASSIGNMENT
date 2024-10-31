@@ -281,20 +281,20 @@ body {
     margin-top: 10px;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 #textOutput {
     color: whitesmoke;
     width: 100%;
-    display: none;
 }
-
-span {
-    width: 50%;
+#option1, #option2 {
+    color: whitesmoke;
+    width: 40%;
+    padding: 3px;
 }
 .selected {
     border: 2px dotted whitesmoke;
-    background-color: rgba(36, 108, 156, 0.4);
+    background-color: rgb(36, 108, 156);
     font-weight: bold;
 }
 
