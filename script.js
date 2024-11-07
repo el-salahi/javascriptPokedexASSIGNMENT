@@ -13,34 +13,9 @@ const redLight = document.getElementById("redLight")
 const yellowLight = document.getElementById("yellowLight")
 const greenLight = document.getElementById("greenLight")
 const defaultImg = document.getElementById("defaultImg");
-// const keyQ = document.getElementById("keyQ");
-// const keyW = document.getElementById("keyW");
-// const keyE = document.getElementById("keyE");
-// const keyR = document.getElementById("keyR");
-// const keyT = document.getElementById("keyT");
-// const keyY = document.getElementById("keyY");
-// const keyU = document.getElementById("keyU");
-// const keyI = document.getElementById("keyI");
-// const keyO = document.getElementById("keyO");
-// const keyP = document.getElementById("keyP");
-// const keyA = document.getElementById("keyA");
-// const keyS = document.getElementById("keyS");
-// const keyD = document.getElementById("keyD");
-// const keyF = document.getElementById("keyF");
-// const keyG = document.getElementById("keyG");
-// const keyH = document.getElementById("keyH");
-// const keyJ = document.getElementById("keyJ");
-// const keyK = document.getElementById("keyK");
-// const keyL = document.getElementById("keyL");
-// const keyZ = document.getElementById("keyZ");
-// const keyX = document.getElementById("keyX");
-// const keyC = document.getElementById("keyC");
-// const keyV = document.getElementById("keyV");
-// const keyB = document.getElementById("keyB");
-// const keyN = document.getElementById("keyN");
-// const keyM = document.getElementById("keyM");
 const backSpace = document.getElementById("backSpace")
 const pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
+
 
 // * API FUNCTIONS
 
@@ -91,28 +66,28 @@ async function errorCheck() {
 }
 document.addEventListener("DOMContentLoaded", errorCheck)
 
-function toggleOptions() {
-  optSearch.classList.toggle("selected");
-  optRandom.classList.toggle("selected");
-}
 
 function imgCheck() {
   const img = screenOutput.querySelector("img");
-  console.log(`Does it contain img? ${screenOutput.contains(img)}`)
   return screenOutput.contains(img) ? true : false;
 }
 
 function pCheck() {
-  console.log(textOutputContainer.childElementCount)
   return textOutputContainer.childElementCount > 1 ? true : false;
 }
 
 function removeScreenContent() {
-  let img = screenOutput.querySelector("img")
-  img.remove();
+  if (imgCheck) {
+    let img = screenOutput.querySelector("img")
+    img.remove();
+  }
+  
   textOutput.textContent = "";
-  for (i = 0; i < textOutputContainer.childElementCount - 1; i++) {
+  if (pCheck) {
+    let count = textOutputContainer.childElementCount - 1;
+  for (i = 0; i < count; i++) {
     textOutputContainer.lastElementChild.remove();
+  }
   }
 }
 
@@ -122,23 +97,7 @@ function getDefaultImg() {
         defaultImg.setAttribute("alt", "pixel pokeball")
         screenOutput.append(defaultImg); 
 }
-function getHomeScreen() {
-        getDefaultImg();
-        textOutput.textContent = `Welcome Pokemon trainer! \n What would you like to do?`;
-        const optSearch = document.createElement("p");
-        optSearch.setAttribute("id", "optSearch");
-        optSearch.classList.add("selected")
-        optSearch.classList.add("option")
-        optSearch.textContent = "Search your favourite Pokemon via the Pokedex keyboard";
-        textOutputContainer.append(optSearch);
-        const optRandom = document.createElement("p");
-        optRandom.setAttribute("id", "optRandom");
-        optRandom.classList.add("option")
-        optRandom.textContent = "Find a random Pokemon";
-        textOutputContainer.append(optRandom);
-        console.log(optSearch)
-        console.log(optRandom)
-}
+
 
 async function displayRanPokemon() {
   let ranPokemonData = []
@@ -177,51 +136,68 @@ async function displayRanPokemon() {
 }
 
 function clearRanPokemon () {
-  const img = document.getElementById("img");
+  if (imgCheck) {
+    const img = document.getElementById("img");
   img.remove();
+  }
   textOutput.textContent = "Ready for another pokemon?\nPress Enter to discover more random pokemon.\nOr press home to search the name of your favourite!"
   optRandom.textContent = "";
 }
 
-// * animation and default display on/off onBtn click
-function animation() {
-    onLight.classList.toggle("main");
-    redLight.classList.toggle("red");
-    yellowLight.classList.toggle("yellow");
-    greenLight.classList.toggle("green");
+function getHomeScreen() {
+    getDefaultImg();
 
-    // if (imgCheck()) {
-    //   screenOutput.removeChild(screenOutput.firstChild);
-    //   if (pCheck()) {
-    //     textOutput.textContent = "";
-    //     console.log(optRandom)
-    //     console.log(optSearch)
-    //     optSearch.remove();
-    //     optRandom.remove();
-    //   }
-    // } else {
-    //   if (pCheck()) {
-    //     textOutput.textContent = "";
-    //     console.log(optRandom)
-    //     console.log(optSearch)
-    //     optSearch.remove();
-    //     optRandom.remove();
-    //   } else {
-    //   setTimeout(getHomeScreen, 2800);
-    //   }
-    // }
-    if (imgCheck() || pCheck()) {
-      removeScreenContent();
-    } else {
-      setTimeout(getHomeScreen, 2800);
-    }
+  textOutput.textContent = `Welcome Pokemon trainer! \n What would you like to do?`;
+  let optSearch = document.createElement("p");
+  optSearch.setAttribute("id", "optSearch");
+  optSearch.classList.add("selected")
+  optSearch.classList.add("option")
+  optSearch.textContent = "Search your favourite Pokemon via the Pokedex keyboard";
+
+  let optRandom = document.createElement("p");
+  optRandom.setAttribute("id", "optRandom");
+  optRandom.classList.add("option")
+  optRandom.textContent = "Find a random Pokemon";
+
+  textOutputContainer.append(optSearch, optRandom);
+  console.log(optSearch, optRandom)
+  }
+
+
+
+// * animation and default display on/off onBtn click
+
+onBtn.addEventListener("click", () => {
+  // *ANIMATION
+  onLight.classList.toggle("main");
+  redLight.classList.toggle("red");
+  yellowLight.classList.toggle("yellow");
+  greenLight.classList.toggle("green");
+// *TOGGLE SCREENS ON/OFF
+  if (imgCheck() || pCheck()) {
+    removeScreenContent();
+  } else { 
+    setTimeout(getHomeScreen, 2800);
 }
-onBtn.addEventListener("click", animation);
+}
+);
+
+
 
 // *choose Random or Search mode
+
+function toggleOptions() {
+  console.log(optSearch)
+  console.log(optRandom)
+  optSearch.classList.toggle("selected");
+  optRandom.classList.toggle("selected");
+}
+
 rightBtn.addEventListener("click", toggleOptions);
 leftBtn.addEventListener("click", toggleOptions);
-enterBtn.addEventListener("click", () => {
+
+
+function chooseMode() {
 
   if (optSearch.classList.length === 2) {
     console.log("SearchTest")
@@ -246,11 +222,11 @@ enterBtn.addEventListener("click", () => {
     searchDisplay += outputChar;
     optSearch.textContent = searchDisplay;
     }
-}
-keyboardContainer.addEventListener("click",displayKey);
+  }
+  keyboardContainer.addEventListener("click", displayKey);
 
   } else if (optRandom.classList.length === 2) {
-    console.log("Ransom Test");
+    console.log("Random Test");
     // *Set up Random screen
     textOutput.textContent = "What will you find on your travels?\n Press Enter to discover new Pokemon in your vicinity!";
     optRandom.classList.remove("selected");
@@ -263,17 +239,22 @@ keyboardContainer.addEventListener("click",displayKey);
     // * clear randpokemon data on clear btn click
     clearBtn.addEventListener("click", clearRanPokemon)
   }
+}
 
-})
+enterBtn.addEventListener("click", chooseMode, {once: true})
+
+
+
 
 // *Display back to default screens.
-
 homeBtn.addEventListener("click", () => {
   if (imgCheck() || pCheck()) {
     removeScreenContent();
     getHomeScreen();
-  } else {
-    getHomeScreen();
+    enterBtn.removeEventListener("click", displayRanPokemon)
+    enterBtn.addEventListener("click", chooseMode)
+
+    clearBtn.removeEventListener("click", clearRanPokemon)
   }
 })
 
