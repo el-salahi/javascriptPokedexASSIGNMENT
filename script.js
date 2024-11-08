@@ -37,15 +37,18 @@ async function getRanPokemon() {
     return ranPokemon;
 } 
 
-// TODO create getkeyInputPokemon function
-// async function getKeyInputPokemon() {
-//   let pokemonNumber; 
-//   let pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
-//   pokedexAPI += pokemonNumber;
-//   const response = await fetch(pokedexAPI);
-//   const inputtedPokemon = await response.json();
-//   return inputtedPokemon;
-// } 
+// TODO change pokemon name
+
+
+async function getKeyedPokemon() {
+  let pokemonName = optSearch.textContent;
+  let pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
+  pokedexAPI += pokemonName;
+  const response = await fetch(pokedexAPI);
+  const keyedPokemon = await response.json();
+  console.log(keyedPokemon);
+  return keyedPokemon;
+} 
 
 // * GET API DATA ON PAGE LOAD
 
@@ -60,6 +63,13 @@ async function errorCheck() {
   let ranPokemonData = [];
   try {
     ranPokemonData = await getRanPokemon();
+  } catch (error) {
+    console.log(error);
+  }
+
+  let keyedPokemonData = [];
+  try {
+    keyedPokemonData = await getKeyedPokemon();
   } catch (error) {
     console.log(error);
   }
@@ -98,6 +108,46 @@ function getDefaultImg() {
         screenOutput.append(defaultImg); 
 }
 
+async function displayKeyedPokemon() {
+  let keyedPokemonData = []
+  keyedPokemonData = await getKeyedPokemon();
+  console.log(keyedPokemonData)
+
+    // types list
+  let typeArray = [];
+  for (let i = 0; i < keyedPokemonData.types.length; i++) {
+    typeArray.push(keyedPokemonData.types[i].type.name);
+  }
+  const typeList = typeArray.toString();
+  console.log(typeList); 
+
+  // ablities list
+  let abilitiesArray = [];
+  for (let i = 0; i < keyedPokemonData.abilities.length; i++) {
+    abilitiesArray.push(keyedPokemonData.abilities[i].ability.name);
+  }
+  const abilitiesList = abilitiesArray.toString(); 
+  console.log(abilitiesList);
+
+// DIsplay keyed Pokemon stats
+  textOutput.textContent = `A ${keyedPokemonData.name} appears...`
+  optSearch.textContent = `Name: ${keyedPokemonData.name}\nHeight: ${keyedPokemonData.height}\n Weight: ${keyedPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
+  console.log(keyedPokemonData)
+
+  // Remove default img and insert ran pokemon img
+  if (imgCheck()) {
+    screenOutput.removeChild(screenOutput.firstChild);
+  }
+
+  let img = keyedPokemonData.sprites.front_default
+  const keyedPokemonImg = document.createElement("img");
+  keyedPokemonImg.setAttribute("src", img);
+  keyedPokemonImg.setAttribute("id", "img");
+  screenOutput.append(keyedPokemonImg);
+  console.log(screenOutput)
+} 
+
+  
 
 async function displayRanPokemon() {
   let ranPokemonData = []
@@ -224,6 +274,24 @@ function chooseMode() {
     }
   }
   keyboardContainer.addEventListener("click", displayKey);
+
+  enterBtn.addEventListener("click", async () => {
+    const pokedexData = await getPokedexData();
+    let pokedexDataArray = pokedexData.results;
+    let keyedValue = optSearch.textContent
+    console.log(keyedValue)
+
+    let i = 0;
+    while (i < pokedexDataArray.length) {
+      if (keyedValue === pokedexDataArray[i].name) {
+        displayKeyedPokemon();
+        break
+      } else {
+        textOutput.textContent = `Cannot identify. ${keyedValue} is unknown to your Pokedex.\nPress clear to search more of your favourite Pokemon\n Or press home to discover random Pokemon in the wild`
+      }
+      i++
+    }
+  })
 
   } else if (optRandom.classList.length === 2) {
     console.log("Random Test");
