@@ -5,12 +5,23 @@
     --screenContainer: #CED0CA;
 }
 
+@font-face {
+    font-family: "Pokemon";
+    src: url(./Fonts/PokemonGb-RAeo.ttf);
+}
+
+@font-face {
+    font-family: "Tiny5";
+    src: url(./Fonts/Tiny5-Regular.ttf);
+}
+
 * {
     margin: 0;
 }
 
 body {
     width: 100vw;
+    font-family: "Pokemon", "Tiny5", sans-serif
 }
 
 #pokedexContainer {
