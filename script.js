@@ -38,9 +38,6 @@ async function getRanPokemon() {
     return ranPokemon;
 } 
 
-// TODO change pokemon name
-
-
 async function getKeyedPokemon() {
   let pokemonName = optSearch.textContent;
   let pokedexAPI = "https://pokeapi.co/api/v2/pokemon/"
@@ -139,7 +136,12 @@ async function displayKeyedPokemon() {
 
 // DIsplay keyed Pokemon stats
   textOutput.textContent = `A ${keyedPokemonData.name} appears...`
-  optSearch.textContent = `Name: ${keyedPokemonData.name}\nHeight: ${keyedPokemonData.height}\n Weight: ${keyedPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
+  optSearch.style.textAlign = "left";
+  optSearch.textContent = `Name: ${keyedPokemonData.name}
+  Height: ${keyedPokemonData.height}
+  Weight: ${keyedPokemonData.weight}
+  Types: ${typeList}
+  Abilities: ${abilitiesList}` 
   console.log(keyedPokemonData)
 
   // Remove default img and insert ran pokemon img
@@ -167,7 +169,9 @@ async function displayKeyedOutput() {
       displayKeyedPokemon();
       break
     } else {
-      textOutput.textContent = `Cannot identify. ${keyedValue} is unknown to your Pokedex.\nPress clear to search more of your favourite Pokemon\n Or press home to discover random Pokemon in the wild`
+      textOutput.textContent = `Uh-oh! ${keyedValue} is unknown to your Pokedex
+      Press clear to search more of your favourite Pokemon
+      Or press home to discover random Pokemon in the wild`
     }
     i++
   }
@@ -189,7 +193,8 @@ function clearKeyedPokemon() {
 }
 
 // change textOutput 
-    textOutput.textContent = "Try typing another Pokemon in the keyboard to find stats on your favourite\nOr press home to discover a random Pokemon in the wild";
+    textOutput.textContent = `Try typing another Pokemon in the keyboard to find more stats
+    Or press home to discover a random Pokemon in the wild`;
     optSearch.textContent = "";
 }
 
@@ -216,7 +221,15 @@ async function displayRanPokemon() {
 
   // Display ran pokemon stats
   textOutput.textContent = "A random Pokemon appears..."
-  optRandom.textContent = `Name: ${ranPokemonData.name}\nHeight: ${ranPokemonData.height}\n Weight: ${ranPokemonData.weight}\nTypes: ${typeList}\nAbilities: ${abilitiesList}` 
+  textOutputContainer.style.justifyContent = "flex-start"
+  optRandom.style.width = "100%"
+  optRandom.style.textAlign = "left"
+  optRandom.style.margin = "0"
+  optRandom.textContent = `Name: ${ranPokemonData.name}\n
+  Height: ${ranPokemonData.height}\n
+  Weight: ${ranPokemonData.weight}\n
+  Types: ${typeList}\n
+  Abilities: ${abilitiesList}` 
 
   // Remove default img and insert ran pokemon img
   if (imgCheck()) {
@@ -235,7 +248,9 @@ function clearRanPokemon () {
     const img = document.getElementById("img");
   img.remove();
   }
-  textOutput.textContent = "Ready for another pokemon?\nPress Enter to discover more random pokemon.\nOr press home to search the name of your favourite!"
+  textOutput.textContent = `Ready for another pokemon?
+  Press Enter to discover more random Pokemon
+  Or press Home to search the name of your favourite!`
   optRandom.textContent = "";
 }
 
@@ -243,17 +258,20 @@ function clearRanPokemon () {
 function getHomeScreen() {
     getDefaultImg();
 
-  textOutput.textContent = `Welcome Pokemon trainer! \n What would you like to do?`;
+  textOutput.textContent = `Welcome Pokemon trainer!
+  What would you like to do?`;
   let optSearch = document.createElement("p");
   optSearch.setAttribute("id", "optSearch");
   optSearch.classList.add("selected")
   optSearch.classList.add("option")
-  optSearch.textContent = "Search your favourite Pokemon via the Pokedex keyboard";
+  optSearch.textContent = `Search Pokemon via the Pokedex keyboard
+  ...`;
 
   let optRandom = document.createElement("p");
   optRandom.setAttribute("id", "optRandom");
   optRandom.classList.add("option")
-  optRandom.textContent = "Find a random Pokemon";
+  optRandom.textContent = `Find a random Pokemon
+  ...`;
 
   textOutputContainer.append(optSearch, optRandom);
   console.log(optSearch, optRandom)
@@ -313,8 +331,9 @@ function chooseMode() {
   if (optSearch.classList.length === 2) {
     console.log("SearchTest")
     // *Set up Search screen
-    textOutput.textContent = "Type the name of your pokemon in the keyboard and click enter to find some quick stats";
+    textOutput.textContent = `Type the name of your favourite Pokemon in the Pokedex keyboard and press enter to find some quick stats`;
     optSearch.classList.remove("selected");
+    // optSearch.style.color = "red";
     optSearch.textContent = "";
     optRandom.remove();
 
@@ -323,14 +342,17 @@ function chooseMode() {
 
   // * display keyed pokemon or error message on enterBtn click
   enterBtn.addEventListener("click", displayKeyedOutput)
+
 // * clear keyed pokemon on clearBtn click
   clearBtn.addEventListener("click", clearKeyedPokemon);
 
   } else if (optRandom.classList.length === 2) {
     console.log("Random Test");
     // *Set up Random screen
-    textOutput.textContent = "What will you find on your travels?\n Press Enter to discover new Pokemon in your vicinity!";
+    textOutput.textContent = `What will you find on your travels?
+    Press Enter to discover new Pokemon in your vicinity!`;
     optRandom.classList.remove("selected");
+    // optRandom.style.color = "red";
     optRandom.textContent = "";
     optSearch.remove();
 
