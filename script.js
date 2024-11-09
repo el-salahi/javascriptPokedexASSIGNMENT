@@ -74,6 +74,12 @@ async function errorCheck() {
 }
 document.addEventListener("DOMContentLoaded", errorCheck)
 
+// *AUDIO
+
+const onStartAudio = new Audio("./Assets/pokemonOn.mp3");
+const onLightPlinkAudio = new Audio("/Assets/pokemonPlink.mp3");
+
+
 
 function imgCheck() {
   const img = screenOutput.querySelector("img");
@@ -251,7 +257,7 @@ function clearRanPokemon () {
 
 
 function getHomeScreen() {
-    getDefaultImg();
+  getDefaultImg();
 
   textOutput.innerHTML = `Welcome Pokemon trainer!<br />What would you like to do?`;
   let optSearch = document.createElement("p");
@@ -282,8 +288,12 @@ onBtn.addEventListener("click", () => {
 // *TOGGLE SCREENS ON/OFF
   if (imgCheck() || pCheck()) {
     removeScreenContent();
-  } else { 
-    setTimeout(getHomeScreen, 2800);
+  } else {
+    onStartAudio.play();
+    setTimeout(() => {
+      onLightPlinkAudio.play();
+      getHomeScreen();
+    }, 2800);
 }
 });
 

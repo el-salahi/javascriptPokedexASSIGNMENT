@@ -9,12 +9,12 @@
 
 @font-face {
     font-family: "Pokemon";
-    src: url(./Fonts/PokemonGb-RAeo.ttf);
+    src: url(./Assets/PokemonGb-RAeo.ttf);
 }
 
 @font-face {
     font-family: "Tiny5";
-    src: url(./Fonts/Tiny5-Regular.ttf);
+    src: url(./Assets/Tiny5-Regular.ttf);
 }
 
 * {
