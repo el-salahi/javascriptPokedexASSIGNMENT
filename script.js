@@ -76,8 +76,30 @@ document.addEventListener("DOMContentLoaded", errorCheck)
 
 // *AUDIO
 
-const onStartAudio = new Audio("./Assets/pokemonOn.mp3");
-const onLightPlinkAudio = new Audio("/Assets/pokemonPlink.mp3");
+const pokedexOnAudio = new Audio("./Assets/pokedexOn.mp3");
+const pokedexOffAudio = new Audio("./Assets/pokedexOff.mp3");
+const animationEndPlinkAudio = new Audio("/Assets/animationEndPlink.mp3");
+const mouseDownClick = new Audio("./Assets/mouseDownClick.mp3");
+const mouseUpClick = new Audio("./Assets/mouseUpClick.mp3");
+const keyboardClick = new Audio("./Assets/keyboardClick.mp3");
+
+const buttons = document.querySelectorAll(".btn");
+buttons.forEach(button => {
+  button.addEventListener("mousedown", () => {
+    mouseDownClick.play();
+  });
+  button.addEventListener("mouseup", () => {
+    mouseUpClick.play();
+  })
+})
+
+const keySqus = document.querySelectorAll(".keySqu");
+keySqus.forEach(keySqu => {
+  keySqu.addEventListener("click", () => {
+    keyboardClick.play();
+  })
+})
+
 
 
 
@@ -287,11 +309,14 @@ onBtn.addEventListener("click", () => {
   greenLight.classList.toggle("green");
 // *TOGGLE SCREENS ON/OFF
   if (imgCheck() || pCheck()) {
+    // Turning OFF
+    pokedexOffAudio.play();
     removeScreenContent();
   } else {
-    onStartAudio.play();
+    // Turning ON
+    pokedexOnAudio.play();
     setTimeout(() => {
-      onLightPlinkAudio.play();
+      animationEndPlinkAudio.play();
       getHomeScreen();
     }, 2800);
 }
