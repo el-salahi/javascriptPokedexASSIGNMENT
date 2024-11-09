@@ -297,7 +297,7 @@ body {
     width: 100%;
     padding: 5px;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 20px;
     text-align: center;
     margin: auto auto;
 }
@@ -306,10 +306,9 @@ body {
     width: 40%;
     padding: 5px;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 20px;
     text-align: center;
     margin: auto auto;
-    border: solid;
 }
 .selected {
     border: 2px solid whitesmoke;

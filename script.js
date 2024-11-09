@@ -114,6 +114,8 @@ function getDefaultImg() {
 
 // * FUNCTIONS TO BE APPLYED ON BUTTON CLICK - KEYED INPUT POKEMON
 async function displayKeyedPokemon() {
+
+  // get keyedPokemon data
   let keyedPokemonData = []
   keyedPokemonData = await getKeyedPokemon();
   console.log(keyedPokemonData)
@@ -134,14 +136,13 @@ async function displayKeyedPokemon() {
   const abilitiesList = abilitiesArray.toString(); 
   console.log(abilitiesList);
 
-// DIsplay keyed Pokemon stats
+// Display keyed Pokemon stats
   textOutput.textContent = `A ${keyedPokemonData.name} appears...`
-  optSearch.style.textAlign = "left";
-  optSearch.textContent = `Name: ${keyedPokemonData.name}
-  Height: ${keyedPokemonData.height}
-  Weight: ${keyedPokemonData.weight}
-  Types: ${typeList}
-  Abilities: ${abilitiesList}` 
+  optSearch.style.width = "100%"
+  optSearch.style.textAlign = "left"
+  optSearch.style.margin = "0"
+  optSearch.style.fontSize = "10px"
+  optSearch.innerHTML = `Name: ${keyedPokemonData.name}<br />Height: ${keyedPokemonData.height}<br />Weight: ${keyedPokemonData.weight}<br />Types: ${typeList}<br />Abilities: ${abilitiesList}` 
   console.log(keyedPokemonData)
 
   // Remove default img and insert ran pokemon img
@@ -169,9 +170,7 @@ async function displayKeyedOutput() {
       displayKeyedPokemon();
       break
     } else {
-      textOutput.textContent = `Uh-oh! ${keyedValue} is unknown to your Pokedex
-      Press clear to search more of your favourite Pokemon
-      Or press home to discover random Pokemon in the wild`
+      textOutput.innerHTML = `Uh-oh! ${keyedValue} is unknown to your Pokedex<br />Press CLEAR to search more of your favourite Pokemon<br />Or press HOME to discover random Pokemon in the wild`
     }
     i++
   }
@@ -193,8 +192,7 @@ function clearKeyedPokemon() {
 }
 
 // change textOutput 
-    textOutput.textContent = `Try typing another Pokemon in the keyboard to find more stats
-    Or press home to discover a random Pokemon in the wild`;
+    textOutput.innerHTML = `Try typing another Pokemon in the keyboard to find more stats<br />Or press HOME to discover a random Pokemon in the wild`;
     optSearch.textContent = "";
 }
 
@@ -225,11 +223,8 @@ async function displayRanPokemon() {
   optRandom.style.width = "100%"
   optRandom.style.textAlign = "left"
   optRandom.style.margin = "0"
-  optRandom.textContent = `Name: ${ranPokemonData.name}\n
-  Height: ${ranPokemonData.height}\n
-  Weight: ${ranPokemonData.weight}\n
-  Types: ${typeList}\n
-  Abilities: ${abilitiesList}` 
+  optRandom.style.fontSize = "10px"
+  optRandom.innerHTML = `Name: ${ranPokemonData.name}<br />Height: ${ranPokemonData.height}<br />Weight: ${ranPokemonData.weight}<br />Types: ${typeList}<br />Abilities: ${abilitiesList}` 
 
   // Remove default img and insert ran pokemon img
   if (imgCheck()) {
@@ -248,9 +243,7 @@ function clearRanPokemon () {
     const img = document.getElementById("img");
   img.remove();
   }
-  textOutput.textContent = `Ready for another pokemon?
-  Press Enter to discover more random Pokemon
-  Or press Home to search the name of your favourite!`
+  textOutput.innerHTML = `Ready for another pokemon?<br />Press ENTER to discover more random Pokemon<br />Or press HOME to search the name of your favourite!`
   optRandom.textContent = "";
 }
 
@@ -258,20 +251,17 @@ function clearRanPokemon () {
 function getHomeScreen() {
     getDefaultImg();
 
-  textOutput.textContent = `Welcome Pokemon trainer!
-  What would you like to do?`;
+  textOutput.innerHTML = `Welcome Pokemon trainer!<br />What would you like to do?`;
   let optSearch = document.createElement("p");
   optSearch.setAttribute("id", "optSearch");
   optSearch.classList.add("selected")
   optSearch.classList.add("option")
-  optSearch.textContent = `Search Pokemon via the Pokedex keyboard
-  ...`;
+  optSearch.innerHTML = `Search Pokemon via the Pokedex keyboard<br />...`;
 
   let optRandom = document.createElement("p");
   optRandom.setAttribute("id", "optRandom");
   optRandom.classList.add("option")
-  optRandom.textContent = `Find a random Pokemon
-  ...`;
+  optRandom.innerHTML = `Find a random Pokemon<br />...`;
 
   textOutputContainer.append(optSearch, optRandom);
   console.log(optSearch, optRandom)
@@ -331,7 +321,7 @@ function chooseMode() {
   if (optSearch.classList.length === 2) {
     console.log("SearchTest")
     // *Set up Search screen
-    textOutput.textContent = `Type the name of your favourite Pokemon in the Pokedex keyboard and press enter to find some quick stats`;
+    textOutput.textContent = `Type the name of your favourite Pokemon in the Pokedex keyboard and press ENTER to find some quick stats`;
     optSearch.classList.remove("selected");
     // optSearch.style.color = "red";
     optSearch.textContent = "";
@@ -349,8 +339,7 @@ function chooseMode() {
   } else if (optRandom.classList.length === 2) {
     console.log("Random Test");
     // *Set up Random screen
-    textOutput.textContent = `What will you find on your travels?
-    Press Enter to discover new Pokemon in your vicinity!`;
+    textOutput.innerHTML = `What will you find on your travels?<br />Press ENTER to discover new Pokemon in your vicinity!`;
     optRandom.classList.remove("selected");
     // optRandom.style.color = "red";
     optRandom.textContent = "";
@@ -383,6 +372,12 @@ homeBtn.addEventListener("click", () => {
     clearBtn.removeEventListener("click", clearKeyedPokemon)
   }
 })
+
+// TODO 1. REVERT STYLING OF OPTSEARCH ON CLEAR BTN CLICK. (SEARCHMODE)
+
+// TODO 2. CHANGE CSS ON ALL BUTTONS, BOLD, VISIBLE TEXT
+
+// TODO 3. ADD SOUND TO ON BTN ANIMATION?? 
 
 
 
