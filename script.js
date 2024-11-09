@@ -192,7 +192,9 @@ function clearKeyedPokemon() {
 }
 
 // change textOutput 
-    textOutput.innerHTML = `Try typing another Pokemon in the keyboard to find more stats<br />Or press HOME to discover a random Pokemon in the wild`;
+    textOutput.innerHTML = `Try typing another Pokemon in the keyboard to find more stats<br />Or press HOME to discover a random Pokemon in the wild`;  
+    optSearch.style.textAlign = "center"
+    optSearch.style.fontSize = "12px"
     optSearch.textContent = "";
 }
 
